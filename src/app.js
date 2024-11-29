@@ -33,5 +33,5 @@ app.get('/health/live', (req, res) => {
 // Démarrer le serveur sur le port 3000
 const PORT = process.env.APP_PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`); // Testons
 });
