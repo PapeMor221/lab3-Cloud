@@ -2,7 +2,7 @@
 node_modules/
 
 # Docker files
-#.env
+.env
 
 # Swagger-generated files
 swagger-output.json

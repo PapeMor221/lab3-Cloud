@@ -71,11 +71,13 @@ Après le déploiement, l'application est accessible via les liens suivants :
 
 - **Documentation de l'API (Swagger)** :  
   [https://employee-api-app-1.graysmoke-6267dc98.eastus.azurecontainerapps.io/api-docs/](https://employee-api-app-1.graysmoke-6267dc98.eastus.azurecontainerapps.io/api-docs/)
+  ![Capture d'écran de l'application](swagger.png)
 
 - **Interface Administrateur** :  
   [https://employee-api-app-1.graysmoke-6267dc98.eastus.azurecontainerapps.io/admin](https://employee-api-app-1.graysmoke-6267dc98.eastus.azurecontainerapps.io/admin)
 
   ![Capture d'écran de l'application](doc1.png)
+  ![Capture d'écran de l'application](doc2.png)
 
 ---
 
