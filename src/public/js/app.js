@@ -1,27 +1,25 @@
-const employeeList = document.getElementById("employeeList");
-const employeeForm = document.getElementById("employeeForm");
-const editEmployeeContainer = document.getElementById("editEmployeeContainer");
-const editEmployeeForm = document.getElementById("editEmployeeForm");
-let editingEmployeeId = null; // Stocke l'ID de l'employé en cours de modification
+// public/js/app.js
 
-// Charger la liste des employés
+// Récupérer la liste des employés et l'afficher
+const employeeList = document.getElementById("employeeList");
+
 async function fetchEmployees() {
     const response = await fetch('/api/employees');
     const employees = await response.json();
     
-    employeeList.innerHTML = ''; // Réinitialiser la liste
+    employeeList.innerHTML = ''; // Réinitialiser la liste avant d'ajouter
     employees.forEach(employee => {
         const li = document.createElement("li");
-        li.innerHTML = `
-            ${employee.firstName} ${employee.lastName} - ${employee.profile} - ${employee.integration} - $${employee.salary}
-        `;
+        li.textContent = `${employee.firstName} ${employee.lastName} - ${employee.profile} - ${employee.integration} - ${employee.salary}`;
         employeeList.appendChild(li);
     });
 }
 
-// Ajouter un employé
+// Ajouter un employé via le formulaire
+const employeeForm = document.getElementById("employeeForm");
+
 employeeForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Empêche la soumission du formulaire par défaut
 
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
@@ -44,83 +42,13 @@ employeeForm.addEventListener("submit", async (event) => {
     });
 
     if (response.ok) {
-        fetchEmployees();
+        fetchEmployees(); // Recharger la liste des employés après ajout
     } else {
         alert("Erreur lors de l'ajout de l'employé");
     }
 
-    employeeForm.reset();
+    employeeForm.reset(); // Réinitialiser le formulaire
 });
 
-// Supprimer un employé
-async function deleteEmployee(employeeId) {
-    const response = await fetch(`/api/employees/${employeeId}`, {
-        method: 'DELETE'
-    });
-
-    if (response.ok) {
-        fetchEmployees();
-    } else {
-        alert("Erreur lors de la suppression de l'employé");
-    }
-}
-
-// Modifier un employé
-async function editEmployee(employeeId) {
-    // Charger les données de l'employé
-    const response = await fetch(`/api/employees/${employeeId}`);
-    const employee = await response.json();
-
-    // Remplir le formulaire de modification
-    editingEmployeeId = employeeId;
-    document.getElementById("editFirstName").value = employee.firstName;
-    document.getElementById("editLastName").value = employee.lastName;
-    document.getElementById("editProfile").value = employee.profile;
-    document.getElementById("editIntegration").value = employee.integration;
-    document.getElementById("editSalary").value = employee.salary;
-
-    // Afficher le formulaire de modification
-    editEmployeeContainer.style.display = "block";
-}
-
-// Soumettre le formulaire de modification
-editEmployeeForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const firstName = document.getElementById("editFirstName").value;
-    const lastName = document.getElementById("editLastName").value;
-    const profile = document.getElementById("editProfile").value;
-    const integration = document.getElementById("editIntegration").value;
-    const salary = document.getElementById("editSalary").value;
-
-    const response = await fetch(`/api/employees/${editingEmployeeId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-            firstName, 
-            lastName, 
-            profile, 
-            integration, 
-            salary 
-        })
-    });
-
-    if (response.ok) {
-        fetchEmployees();
-        editEmployeeContainer.style.display = "none";
-        editingEmployeeId = null;
-    } else {
-        alert("Erreur lors de la mise à jour de l'employé");
-    }
-});
-
-// Annuler la modification
-document.getElementById("cancelEdit").addEventListener("click", () => {
-    editEmployeeContainer.style.display = "none";
-    editingEmployeeId = null;
-});
-
-// Charger la liste des employés au démarrage
+// Charger la liste des employés au chargement de la page
 fetchEmployees();

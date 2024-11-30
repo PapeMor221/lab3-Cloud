@@ -39,7 +39,7 @@ app.get("/admin", (req, res) => {
 
 
 // Démarrage du serveur
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
   console.log(`Server running on port -- ${PORT}`);
 });
