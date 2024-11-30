@@ -10,7 +10,7 @@ async function fetchEmployees() {
     employeeList.innerHTML = ''; // Réinitialiser la liste avant d'ajouter
     employees.forEach(employee => {
         const li = document.createElement("li");
-        li.textContent = `${employee.firstName} ${employee.lastName} - ${employee.profile} - ${employee.integration} - ${employee.salary}`;
+        li.textContent = `${employee.firstName} ${employee.lastName} - ${employee.profile} - ${employee.integration} - $ ${employee.salary}`;
         employeeList.appendChild(li);
     });
 }

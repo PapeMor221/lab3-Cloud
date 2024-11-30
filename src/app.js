@@ -14,9 +14,10 @@ app.use(express.json());
 
 // Définir le moteur de template EJS
 app.set('view engine', 'ejs');
+app.set('views', './src/views');
 
 // Dossier pour les fichiers statiques (CSS, JS)
-app.use(express.static('public')); // Le dossier 'public' contient vos fichiers CSS et JS
+app.use(express.static('src/public')); // Le dossier 'public' contient vos fichiers CSS et JS
 
 // Connexion à MongoDB Atlas
 mongoose.connect('mongodb+srv://ndiayepm:IbrahimaBlog2024@cluster0.dgyni.mongodb.net/blogDB?retryWrites=true&w=majority&appName=Cluster0', {
