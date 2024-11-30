@@ -1,40 +1,43 @@
 require('dotenv').config(); // Charge les variables d'environnement depuis le fichier .env
+const mongoose = require('mongoose');
 
-const { Sequelize, DataTypes } = require("sequelize");
-
-// Construire l'URL de la base de données en utilisant les variables d'environnement
-const databaseUrl = `postgres://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`;
+// Construire l'URL de la base de données MongoDB en utilisant les variables d'environnement
+const databaseUrl = 'mongodb+srv://ndiayepm:IbrahimaBlog2024@cluster0.dgyni.mongodb.net/blogDB?retryWrites=true&w=majority&appName=Cluster0';
 
 
-const sequelize = new Sequelize(databaseUrl, {
-  dialect: "postgres",
-});
+// Connexion à la base de données MongoDB
+mongoose.connect(databaseUrl, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log("Connexion à MongoDB réussie"))
+  .catch((err) => console.error("Erreur de connexion à MongoDB :", err));
 
-// Define the Employee model
-const Employee = sequelize.define("Employee", {
+// Définir le modèle Employee
+const employeeSchema = new mongoose.Schema({
   firstName: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: String,
+    required: true, // Champ obligatoire
   },
   lastName: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: String,
+    required: true, // Champ obligatoire
   },
   profile: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: String,
+    default: null, // Optionnel avec une valeur par défaut
   },
   integration: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
+    type: Number,
+    default: null, // Optionnel avec une valeur par défaut
   },
   salary: {
-    type: DataTypes.FLOAT,
-    allowNull: true,
+    type: Number,
+    default: null, // Optionnel avec une valeur par défaut
   },
 });
 
-// Sync the model with the database
-sequelize.sync();
+// Créer le modèle basé sur le schéma
+const Employee = mongoose.model("Employee", employeeSchema);
 
 module.exports = Employee;

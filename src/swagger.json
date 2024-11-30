@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/employees": {
+    "/api/employees": {
       "get": {
         "summary": "Get all employees",
         "responses": {
