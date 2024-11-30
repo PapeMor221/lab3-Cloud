@@ -16,7 +16,7 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 
 // Dossier pour les fichiers statiques (CSS, JS)
-//app.use(express.static('public')); // Le dossier 'public' contient vos fichiers CSS et JS
+app.use(express.static('public')); // Le dossier 'public' contient vos fichiers CSS et JS
 
 // Connexion à MongoDB Atlas
 mongoose.connect('mongodb+srv://ndiayepm:IbrahimaBlog2024@cluster0.dgyni.mongodb.net/blogDB?retryWrites=true&w=majority&appName=Cluster0', {
@@ -31,11 +31,11 @@ app.use("/api/employees", employeeRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Route pour afficher la page d'administration (Front-end)
-/*
+
 app.get("/admin", (req, res) => {
   res.render('admin'); // Charge la vue 'admin.ejs' dans le dossier 'views'
 });
-*/
+
 
 // Démarrage du serveur
 const PORT = process.env.PORT || 80;
