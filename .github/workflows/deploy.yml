@@ -64,13 +64,10 @@ jobs:
 
       - name: Deploy to Azure Container Apps
         run: |
-          az containerapp create \
-          --name employee-api-app-2 \
+          az containerapp update \
+          --name employee-api-app-1 \
           --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
           --image ${{ secrets.DOCKER_HUB_USERNAME }}/employee-api-cloud:${{ github.sha }} \
           --cpu 0.75 --memory 1.5Gi --min-replicas 1 --max-replicas 3 \
           --environment managedEnvironment-myresourcegroup-a8b7
-
-
-
 
