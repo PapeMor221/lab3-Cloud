@@ -68,7 +68,7 @@ jobs:
           --name employee-api-app \
           --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
           --image ${{ secrets.DOCKER_HUB_USERNAME }}/employee-api-cloud:${{ github.sha }} \
-          --cpu 1 --memory 1.5Gi --min-replicas 1 --max-replicas 3 \
+          --cpu 0.75 --memory 1.5Gi --min-replicas 1 --max-replicas 3 \
           --environment managedEnvironment-myresourcegroup-a8b7
 
 
