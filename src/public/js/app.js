@@ -14,8 +14,6 @@ async function fetchEmployees() {
         const li = document.createElement("li");
         li.innerHTML = `
             ${employee.firstName} ${employee.lastName} - ${employee.profile} - ${employee.integration} - $${employee.salary}
-            <button onclick="editEmployee('${employee._id}')">✏️</button>
-            <button onclick="deleteEmployee('${employee._id}')">🗑️</button>
         `;
         employeeList.appendChild(li);
     });
