@@ -1,12 +1,9 @@
 require('dotenv').config(); // Charge les variables d'environnement depuis le fichier .env
 const mongoose = require('mongoose');
 
-// Construire l'URL de la base de données MongoDB en utilisant les variables d'environnement
-const databaseUrl = 'mongodb+srv://ndiayepm:IbrahimaBlog2024@cluster0.dgyni.mongodb.net/blogDB?retryWrites=true&w=majority&appName=Cluster0';
-
 
 // Connexion à la base de données MongoDB
-mongoose.connect(databaseUrl, {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

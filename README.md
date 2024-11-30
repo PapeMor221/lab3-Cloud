@@ -1,94 +1,82 @@
-# Kubernetes Lab DevOps - Employees API - Employees API
+# Cloud Lab DevOps - Employees API on Azure
 
-## Description
+## **Description**
 
-Ce lab Kubernetes, dans le cadre du cours de DevOps, déploie l'API Employés, une application Node.js intégrée avec PostgreSQL, en utilisant des manifestes Kubernetes pour gérer la configuration, le déploiement et la mise à l'échelle. L'API RESTful est conçue pour gérer les enregistrements des employés et est implémentée avec Express.js et Sequelize pour les interactions avec la base de données.
+Dans ce lab, nous avons conçu une petite application de gestion d'employés en utilisant **Node.js** pour le backend et **EJS** pour l'interface graphique. Le déploiement de l'application a été entièrement automatisé grâce à un pipeline **GitHub Actions**. 
 
-## Prérequis
+Ce pipeline couvre les étapes de : 
+- **Construction de l'image Docker**,
+- **Publication de l'image sur Docker Hub**, 
+- **Déploiement sur Azure Container Apps**.
 
-Avant de déployer l'application sur Kubernetes, assurez-vous d'avoir les éléments suivants installés :
+Les secrets nécessaires (Docker Hub et Azure) ont été configurés dans **GitHub Actions** pour garantir la sécurité. Enfin, les ressources Azure ont été créées via le portail Azure pour héberger l'application.
 
-1. **Docker**: Pour exécuter les conteneurs.
-2. **Minikube**: Pour créer un cluster Kubernetes local.
-3. **kubectl**: L'outil en ligne de commande pour interagir avec votre cluster Kubernetes.
+---
 
-### Installation de Minikube avec Docker
+## **Étapes Suivies**
 
-Pour démarrer Minikube avec le driver Docker, exécutez la commande suivante :
+### **1. Développement de l'Application**
 
-```sh
-minikube start --driver=docker
-```
+- L'application a été développée en utilisant :
+  - **Node.js** : pour le backend.
+  - **EJS (Embedded JavaScript)** : pour le rendu côté client.
 
+L'application permet de gérer des employés via une interface graphique et expose également des endpoints API.
 
-## Installation et Execution
+---
 
-### 1. Cloner le Repository
+### **2. Création du Pipeline GitHub Actions**
 
-Clone the GitHub repository:
+Un fichier **YAML** a été écrit pour automatiser le processus de déploiement. Voici les principales étapes incluses dans le pipeline :
 
-```sh
-git clone https://github.com/PapeMor221/Kubernetes-Lab.git
-```
+#### **a. Build de l'Image Docker**
+   - L'image Docker de l'application est construite à l'aide de la commande `docker build`.
+   - Cette image est prête à être poussée vers un registre Docker.
 
+#### **b. Push vers Docker Hub**
+   - L'image Docker est poussée dans le **registre Docker Hub**.
+   - Les identifiants (nom d'utilisateur et mot de passe) sont stockés dans les **secrets GitHub** pour des raisons de sécurité.
 
-### 2. Deployer l'application dans Kubernetes
+#### **c. Déploiement sur Azure**
+   - Le pipeline utilise les identifiants Azure configurés dans les **secrets GitHub** pour déployer l'image Docker directement sur **Azure Container Apps**.
 
-Déployez l'application en utilisant les manifestes Kubernetes :
+---
 
-```sh
-kubectl apply -f k8s/
-```
+### **3. Configuration des Secrets dans GitHub Actions**
 
-### 3. Voir la liste des Pods et Services
-Une fois les pods en cours d'exécution, vous pouvez obtenir la liste des pods et des services en utilisant :
+- Les **secrets Docker Hub** suivants ont été ajoutés :
+  - `DOCKER_USERNAME`: Nom d'utilisateur Docker Hub.
+  - `DOCKER_PASSWORD`: Mot de passe Docker Hub.
 
-```sh
-kubectl get pods
-```
+- Les **secrets Azure** suivants ont été ajoutés :
+  - `AZURE_CLIENT_ID`: Identifiant du client Azure.
+  - `AZURE_TENANT_ID`: Identifiant du tenant Azure.
+  - `AZURE_SUBSCRIPTION_ID`: Identifiant de la souscription Azure.
+  - `AZURE_CLIENT_SECRET`: Secret du client Azure.
 
-```sh
-kubectl get services
-```
+---
 
-### 4. Obtenir l'url du Service BackEnd 
+### **4. Création des Ressources sur Azure**
 
-```sh
-minikube service backend-service --url
-```
-* **Exemple de {{Base_Url}}**: http://192.168.58.2:30080
+Les ressources nécessaires pour héberger l'application ont été créées via le **portail Azure** :
 
-Cette {{Base_Url}} sera utilisé Pour tester les api de l'application BackEdn
+- **Azure Container Apps** : pour déployer l'application.
+- La configuration du déploiement a été finalisée en sélectionnant l'image Docker depuis Docker Hub et en renseignant les variables d'environnement nécessaires.
 
+---
 
-### 5. Tester Les EndPoints /health/live et /health/ready
+### **5. Résultat Final**
 
-Une fois que l'url du service backend disponible vous pouvez tester si tout marche avec les endpoints /health/live et /health/ready en executant ces curls dans votre terminal :
+Après le déploiement, l'application est accessible via les liens suivants :
 
-```sh
-curl http://192.168.58.2:30080/health/live
-```
-Et
+- **Documentation de l'API (Swagger)** :  
+  [https://employee-api-app-1.graysmoke-6267dc98.eastus.azurecontainerapps.io/api-docs/](https://employee-api-app-1.graysmoke-6267dc98.eastus.azurecontainerapps.io/api-docs/)
 
-```sh
-curl http://192.168.58.2:30080/health/ready
-```
+- **Interface Administrateur** :  
+  [https://employee-api-app-1.graysmoke-6267dc98.eastus.azurecontainerapps.io/admin](https://employee-api-app-1.graysmoke-6267dc98.eastus.azurecontainerapps.io/admin)
 
+  ![Capture d'écran de l'application](doc1.png)
 
-### 6. Acceder aux APIs
+---
 
-Une fois que les pods sont en etat de running, les APIs seront disponibles ici:
-
-* **API Endpoints**: {{Base_Url}}/employees ==> **Exemple**: http://192.168.58.2:30080/employees
-* **Swagger Documentation pour les tests**: {{Base_Url}}/docs ==> **Exemple**: http://192.168.58.2:30080/docs
-
-
-### 7. Interagir avec les APIs
-
-Vous pouvez utiliser les points de terminaison de l'API pour effectuer les opérations suivantes :
-
-* **GET /employees**: Obtenir tous les employés.
-* **POST /employees**: Créer un employé.
-* **GET /employees/{id}**: Obtenir un employé par ID.
-* **PUT /employees/{id}**: Mettre à jour un employé par ID.
-* **DELETE /employees/{id}**: Supprimer un employé par ID.
+**Fin du README.**
