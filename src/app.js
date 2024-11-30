@@ -20,7 +20,7 @@ app.set('views', './src/views');
 app.use(express.static('src/public')); // Le dossier 'public' contient vos fichiers CSS et JS
 
 // Connexion à MongoDB Atlas
-mongoose.connect('mongodb+srv://ndiayepm:IbrahimaBlog2024@cluster0.dgyni.mongodb.net/blogDB?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -39,7 +39,7 @@ app.get("/admin", (req, res) => {
 
 
 // Démarrage du serveur
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log(`Server running on port -- ${PORT}`);
 });

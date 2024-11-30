@@ -10,7 +10,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
@@ -62,14 +62,13 @@ input:focus {
 }
 
 button {
-    padding: 12px 20px;
+    padding: 10px 16px;
     background-color: #3498db;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    width: 100%;
+    font-size: 14px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -110,6 +109,31 @@ li:hover {
 li span {
     color: #7f8c8d;
     font-size: 14px;
+}
+
+li .actions {
+    display: flex;
+    gap: 10px;
+}
+
+li .actions button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #2ecc71; /* Couleur pour "Modifier" */
+    transition: background-color 0.3s ease;
+}
+
+li .actions button.delete {
+    background-color: #e74c3c; /* Couleur pour "Supprimer" */
+}
+
+li .actions button:hover {
+    background-color: #27ae60; /* Couleur foncée pour "Modifier" au survol */
+}
+
+li .actions button.delete:hover {
+    background-color: #c0392b; /* Couleur foncée pour "Supprimer" au survol */
 }
 
 @media (max-width: 768px) {
