@@ -11,7 +11,7 @@ RUN npm install cors
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 80
 
 # Command to run the app
 CMD ["node", "src/app.js"]
